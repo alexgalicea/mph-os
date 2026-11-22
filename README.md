@@ -5,14 +5,14 @@
 # MPH OS
 
 **A dashboard home screen for Android in-car displays.**<br>
-Live engine data, navigation, music, calls and messages, at a glance.
+Live engine data, navigation, music, calls and messages, at a glance. In English and Spanish.
 
 [![Latest release](https://img.shields.io/github/v/release/alexgalicea/mph-os?label=latest&color=38bdf8)](../../releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/alexgalicea/mph-os/total?color=6366f1)](../../releases)
 ![Android 7+](https://img.shields.io/badge/Android-7%2B-34d399)
 [![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/alexgalicea)
 
-[**Download the APK**](../../releases/latest) · [Features](#features) · [Install](#install) · [Coming soon](#coming-soon) · [FAQ](#faq)
+[**Download the APK**](../../releases/latest) · [Features](#features) · [Install](#install) · [Coming soon](#coming-soon) · [FAQ](#faq) · [Español](#en-español)
 
 </div>
 
@@ -63,6 +63,7 @@ Trouble codes and readiness monitors are a tap away, and alerts pop up if someth
 - **Driving mode:** Do Not Disturb while moving (starred contacts still get through); video and typing are locked until you park.
 - **Car health:** battery, charging, warm-up, fuel trims and trouble codes rated Good / Watch / Check over your drives.
 - **Service tracker:** oil life and maintenance countdowns from your mileage.
+- **English and Spanish, US or metric units:** km/h, °C, km, liters, km/L or L/100 km. Auto follows your phone.
 - **Demo mode:** try everything with sample data, no car or adapter needed.
 
 ## Install
@@ -75,10 +76,13 @@ Trouble codes and readiness monitors are a tap away, and alerts pop up if someth
 | | |
 |---|---|
 | Device | Android 7 or newer: head unit, tablet or in-car Android setup |
-| Live car data (optional) | ELM327-compatible **Bluetooth Classic** OBD-II adapter, e.g. OBDLink MX+ or LX. BLE-only adapters aren't supported yet. |
+| Live car data (optional) | An ELM327-compatible OBD-II adapter. **Bluetooth Classic** (OBDLink MX+, LX…) is fully supported. **Bluetooth LE** (Vgate iCar Pro BLE, vLinker, OBDLink CX…) and **Wi-Fi** adapters are new and in **beta**: please report how yours works in [Issues](../../issues). |
 | Next turn and messages | Notification access, asked the first time you use them |
 
 **Updates:** Settings → Updates checks this page for new versions. Android always asks before installing.
+
+**Google Play:** a Play Store version is on the way. It follows Google Play's rules, so a couple of features stay
+GitHub-only (recent calls, and updates from this page). This GitHub version always has every feature.
 
 ## Coming soon
 
@@ -108,6 +112,19 @@ Weather uses your approximate location with Open-Meteo; updates are checked agai
 [privacy policy](PRIVACY.md).
 
 **Is the code open source?** Not at the moment. This repository hosts the releases.
+
+## En español
+
+MPH OS convierte tu estéreo Android, tablet o pantalla del auto en un tablero hecho para manejar: datos del motor en
+vivo, navegación con Google Maps o Waze, música, llamadas y mensajes. La app está en **español** y usa **km/h, °C,
+km/L o L/100 km** (Ajustes → Pantalla → Idioma y unidades; Auto sigue tu teléfono).
+
+1. Descarga el `mph-os-<versión>.apk` más reciente en [**Releases**](../../releases/latest) e instálalo (Android 7 o más nuevo).
+2. Opcional: ponlo como tu **app de inicio**.
+3. Para datos del motor necesitas un adaptador OBD-II compatible con ELM327. Bluetooth clásico funciona; Bluetooth LE y
+   Wi-Fi están en **beta**.
+
+Es gratis. Si te sirve, puedes apoyar el desarrollo en **[Ko-fi](https://ko-fi.com/alexgalicea)**.
 
 ## Support
 
