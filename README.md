@@ -104,7 +104,8 @@ fuel and more) works with most cars from 1996 on. Extra Honda signals such as CV
 inside Android Auto or CarPlay.
 
 **What data does it collect?** None leaves your device: trips, fuel history and settings are stored locally.
-Weather uses your approximate location with Open-Meteo; updates are checked against this GitHub page.
+Weather uses your approximate location with Open-Meteo; updates are checked against this GitHub page. See the
+[privacy policy](PRIVACY.md).
 
 **Is the code open source?** Not at the moment. This repository hosts the releases.
 
