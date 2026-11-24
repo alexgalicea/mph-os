@@ -12,7 +12,7 @@ Live engine data, navigation, music, calls and messages, at a glance. In English
 ![Android 7+](https://img.shields.io/badge/Android-7%2B-34d399)
 [![Support on Ko-fi](https://img.shields.io/badge/Ko--fi-support-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/alexgalicea)
 
-[**Download the APK**](../../releases/latest) · [Features](#features) · [Install](#install) · [Coming soon](#coming-soon) · [FAQ](#faq) · [Español](#en-español)
+[**Try it in your browser**](https://alexgalicea.github.io/mph-os/) · [**Download the APK**](../../releases/latest) · [Features](#features) · [Install](#install) · [Coming soon](#coming-soon) · [FAQ](#faq) · [Español](#en-español)
 
 </div>
 
@@ -118,6 +118,8 @@ Weather uses your approximate location with Open-Meteo; updates are checked agai
 MPH OS convierte tu estéreo Android, tablet o pantalla del auto en un tablero hecho para manejar: datos del motor en
 vivo, navegación con Google Maps o Waze, música, llamadas y mensajes. La app está en **español** y usa **km/h, °C,
 km/L o L/100 km** (Ajustes → Pantalla → Idioma y unidades; Auto sigue tu teléfono).
+
+**Pruébala en tu navegador:** [alexgalicea.github.io/mph-os/?lang=es](https://alexgalicea.github.io/mph-os/?lang=es)
 
 1. Descarga el `mph-os-<versión>.apk` más reciente en [**Releases**](../../releases/latest) e instálalo (Android 7 o más nuevo).
 2. Opcional: ponlo como tu **app de inicio**.
