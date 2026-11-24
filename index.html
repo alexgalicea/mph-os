@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MPH OS · Car dashboard for Android</title>
+<meta name="description" content="A dashboard home screen for Android in-car displays: live OBD-II gauges, navigation, music, calls and messages. Free. Try it in your browser.">
+<meta property="og:title" content="MPH OS · Car dashboard for Android">
+<meta property="og:description" content="Live engine data, navigation, music, calls and messages at a glance. Try the live demo.">
+<meta property="og:image" content="https://alexgalicea.github.io/mph-os/images/social.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="images/icon.png">
+<style>
+:root {
+  --bg: #0b1220; --bg2: #111a2e; --card: #152039; --line: #22304f;
+  --text: #e6edf7; --dim: #9fb0cc; --accent: #38bdf8; --accent2: #6366f1; --ok: #34d399;
+  --radius: 16px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+header.top { position: sticky; top: 0; z-index: 10; background: rgba(11,18,32,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; align-items: center; gap: 16px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .02em; color: var(--text); text-decoration: none; }
+.brand img { width: 30px; height: 30px; border-radius: 8px; }
+nav.links { margin-left: auto; display: flex; gap: 18px; align-items: center; }
+nav.links a { color: var(--dim); text-decoration: none; font-size: 15px; }
+nav.links a:hover { color: var(--text); }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lang button { background: none; border: 0; color: var(--dim); padding: 6px 12px; font: inherit; font-size: 14px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--accent); color: #04121f; font-weight: 600; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-weight: 600; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-size: 16px; }
+.btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
+.btn.ghost { border-color: var(--line); color: var(--text); background: transparent; }
+.hero { padding: 56px 0 24px; text-align: center; }
+.eyebrow { color: var(--ok); font-size: 14px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.08; margin: 12px 0 14px; letter-spacing: -.02em; }
+h1 .grad { background: linear-gradient(90deg, var(--accent), #a78bfa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lead { color: var(--dim); font-size: clamp(17px, 2.2vw, 20px); max-width: 720px; margin: 0 auto 26px; }
+.cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.checks { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin: 22px 0 0; padding: 0; list-style: none; color: var(--dim); font-size: 15px; }
+.checks li::before { content: "✓ "; color: var(--ok); font-weight: 700; }
+.demo { padding: 28px 0 56px; }
+.unit { position: relative; margin: 0 auto; max-width: 1072px; padding: 14px; border-radius: 26px; background: linear-gradient(180deg, #1b2438, #0d1424); border: 1px solid #2a3756; box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06); }
+.screen { position: relative; width: 100%; aspect-ratio: 1024 / 600; border-radius: 12px; overflow: hidden; background: #000; }
+.screen iframe { position: absolute; top: 0; left: 0; width: 1024px; height: 600px; border: 0; transform-origin: 0 0; }
+.screen .start { position: absolute; inset: 0; display: grid; place-items: center; background: #000 center / cover no-repeat; cursor: pointer; border: 0; padding: 0; width: 100%; }
+.screen .start span { background: rgba(11,18,32,.85); border: 1px solid var(--line); color: var(--text); padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 17px; }
+.demo-note { text-align: center; color: var(--dim); font-size: 14px; margin: 14px auto 0; max-width: 760px; }
+.demo-tools { display: flex; justify-content: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.demo-tools a { font-size: 14px; }
+section h2 { font-size: clamp(26px, 4vw, 38px); letter-spacing: -.01em; margin: 0 0 10px; }
+section .sub { color: var(--dim); margin: 0 0 28px; max-width: 700px; }
+.features { padding: 56px 0; border-top: 1px solid var(--line); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.card img { display: block; width: 100%; aspect-ratio: 1024 / 600; object-fit: cover; background: #000; }
+.card div { padding: 16px 18px 18px; }
+.card h3 { margin: 0 0 6px; font-size: 18px; }
+.card p { margin: 0; color: var(--dim); font-size: 15px; }
+.why { padding: 56px 0; border-top: 1px solid var(--line); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+.stat { background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+.stat b { display: block; font-size: 34px; color: var(--accent); line-height: 1.1; }
+.stat span { color: var(--dim); font-size: 15px; }
+.install { padding: 56px 0; border-top: 1px solid var(--line); }
+ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+ol.steps li { counter-increment: s; background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 18px 64px; position: relative; color: var(--dim); }
+ol.steps li::before { content: counter(s); position: absolute; left: 18px; top: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: #04121f; display: grid; place-items: center; font-weight: 700; }
+ol.steps li b { color: var(--text); display: block; margin-bottom: 4px; }
+.download { padding: 64px 0; border-top: 1px solid var(--line); text-align: center; }
+.inapp { display: none; max-width: 560px; margin: 0 auto 22px; text-align: left; background: #2a1d0b; border: 1px solid #7c5a1a; color: #fde7b0; border-radius: var(--radius); padding: 16px 18px; }
+.inapp.show { display: block; }
+.inapp ol { margin: 8px 0 0; padding-left: 20px; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--dim); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 24px; justify-content: space-between; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+[data-lang="es"] .en, [data-lang="en"] .es { display: none !important; }
+@media (max-width: 720px) {
+  nav.links a.hide-sm { display: none; }
+  .unit { padding: 8px; border-radius: 16px; }
+  .screen { border-radius: 8px; }
+}
+</style>
+</head>
+<body data-lang="en">
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="images/icon.png" alt="">MPH OS</a>
+    <nav class="links">
+      <a class="hide-sm" href="#demo"><span class="en">Live demo</span><span class="es">Demo</span></a>
+      <a class="hide-sm" href="#features"><span class="en">Features</span><span class="es">Funciones</span></a>
+      <a class="hide-sm" href="#install"><span class="en">Install</span><span class="es">Instalar</span></a>
+      <span class="lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-set-lang="es" aria-pressed="false">ES</button>
+      </span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="en">Free · No ads · No accounts</span><span class="es">Gratis · Sin anuncios · Sin cuentas</span></div>
+      <h1><span class="en">Your car's screen, <span class="grad">rebuilt for driving.</span></span><span class="es">La pantalla de tu auto, <span class="grad">hecha para manejar.</span></span></h1>
+      <p class="lead">
+        <span class="en">MPH OS is a dashboard home screen for Android head units, tablets and in-car screens: live engine data, the next turn from Google Maps or Waze, your music, calls and messages, all sized for a glance.</span>
+        <span class="es">MPH OS es una pantalla de inicio para estéreos Android, tablets y pantallas del auto: datos del motor en vivo, la próxima vuelta de Google Maps o Waze, tu música, llamadas y mensajes, todo para ver de un vistazo.</span>
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#demo"><span class="en">Try it right here</span><span class="es">Pruébala aquí</span></a>
+        <a class="btn ghost js-download" href="https://github.com/alexgalicea/mph-os/releases/latest"><span class="en">Download the APK</span><span class="es">Descargar el APK</span></a>
+      </div>
+      <ul class="checks">
+        <li><span class="en">Android 7 and up</span><span class="es">Android 7 o más nuevo</span></li>
+        <li><span class="en">English &amp; Spanish</span><span class="es">Inglés y español</span></li>
+        <li><span class="en">OBD-II: Bluetooth, BLE, Wi-Fi</span><span class="es">OBD-II: Bluetooth, BLE, Wi-Fi</span></li>
+        <li><span class="en">Uninstalls like any app</span><span class="es">Se desinstala como cualquier app</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="demo" id="demo">
+    <div class="wrap">
+      <div class="unit">
+        <div class="screen" id="screen">
+          <button class="start" id="start" type="button" style="background-image:url(images/feature-cockpit.webp)">
+            <span><span class="en">▶ Start the live demo</span><span class="es">▶ Iniciar la demo en vivo</span></span>
+          </button>
+        </div>
+      </div>
+      <p class="demo-note">
+        <span class="en">This is the real app running in your browser with a simulated car. Tap the dock: Media, Phone, Car (gauges, trips, fuel, health) and Settings, where you can switch to the HUD style or change the color.</span>
+        <span class="es">Es la app real corriendo en tu navegador con un auto simulado. Toca la barra lateral: Música, Teléfono, Auto (medidores, viajes, gasolina, salud) y Ajustes, donde puedes cambiar al estilo HUD o el color.</span>
+      </p>
+      <div class="demo-tools">
+        <a href="#" id="fullscreen"><span class="en">Open full screen</span><span class="es">Abrir en pantalla completa</span></a>
+        <span aria-hidden="true">·</span>
+        <a href="#" id="reset"><span class="en">Reset the demo</span><span class="es">Reiniciar la demo</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="wrap">
+      <h2><span class="en">Everything that matters, one glance</span><span class="es">Todo lo importante, de un vistazo</span></h2>
+      <p class="sub"><span class="en">Built for a 2025 Honda Civic, made for any car from 1996 on.</span><span class="es">Hecha para un Honda Civic 2025, funciona con cualquier auto desde 1996.</span></p>
+      <div class="grid">
+        <article class="card"><img loading="lazy" src="images/feature-cockpit.webp" alt=""><div>
+          <h3><span class="en">The Cockpit</span><span class="es">El Cockpit</span></h3>
+          <p><span class="en">Your car, the live next turn, fuel left on arrival and what's playing on one screen.</span><span class="es">Tu auto, la próxima vuelta, la gasolina con la que llegas y lo que suena, en una pantalla.</span></p></div></article>
+        <article class="card"><img loading="lazy" src="images/feature-gauges.webp" alt=""><div>
+          <h3><span class="en">Real gauges from OBD-II</span><span class="es">Medidores reales por OBD-II</span></h3>
+          <p><span class="en">RPM, speed, load, coolant, battery and more, trouble codes and alerts if something runs hot.</span><span class="es">RPM, velocidad, carga, temperatura, batería y más, códigos de falla y alertas si algo se calienta.</span></p></div></article>
+        <article class="card"><img loading="lazy" src="images/feature-energy.webp" alt=""><div>
+          <h3><span class="en">Your real fuel economy</span><span class="es">Tu rendimiento real</span></h3>
+          <p><span class="en">Range from your own driving, cost per mile and automatic fill-up tracking.</span><span class="es">Autonomía según tu manejo, costo por kilómetro y cargas de gasolina automáticas.</span></p></div></article>
+        <article class="card"><img loading="lazy" src="images/feature-phone.webp" alt=""><div>
+          <h3><span class="en">Calls, messages, calendar</span><span class="es">Llamadas, mensajes, agenda</span></h3>
+          <p><span class="en">One-tap favorites, messages read aloud with quick replies, today's events with directions.</span><span class="es">Favoritos a un toque, mensajes leídos en voz alta con respuestas rápidas y tu agenda con indicaciones.</span></p></div></article>
+        <article class="card"><img loading="lazy" src="images/feature-media.webp" alt=""><div>
+          <h3><span class="en">Music for the road</span><span class="es">Música para el camino</span></h3>
+          <p><span class="en">Spotify, YouTube Music or any media app, with up next and play by name.</span><span class="es">Spotify, YouTube Music o cualquier app, con lo que sigue y "pon tal canción".</span></p></div></article>
+        <article class="card"><img loading="lazy" src="images/feature-hud.webp" alt=""><div>
+          <h3><span class="en">Make it yours</span><span class="es">A tu manera</span></h3>
+          <p><span class="en">Classic or holographic HUD style, accent colors, night mode at sunset, driver profiles.</span><span class="es">Estilo clásico u holográfico, colores, modo nocturno al atardecer y perfiles de conductor.</span></p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="why">
+    <div class="wrap">
+      <h2><span class="en">More than a launcher</span><span class="es">Más que un launcher</span></h2>
+      <p class="sub"><span class="en">A co-pilot that knows your car and keeps your phone out of your hand.</span><span class="es">Un copiloto que conoce tu auto y te deja el celular en el bolsillo.</span></p>
+      <div class="stats">
+        <div class="stat"><b>0</b><span class="en">ads, accounts or trackers. Trips and car data stay on your device.</span><span class="es">anuncios, cuentas o rastreadores. Tus viajes y datos se quedan en tu dispositivo.</span></div>
+        <div class="stat"><b>3</b><span class="en">ways to connect an OBD-II adapter: Bluetooth, Bluetooth LE and Wi-Fi.</span><span class="es">formas de conectar un adaptador OBD-II: Bluetooth, Bluetooth LE y Wi-Fi.</span></div>
+        <div class="stat"><b>2</b><span class="en">languages with matching units: English (mph, mpg) and Spanish (km/h, km/L).</span><span class="es">idiomas con sus unidades: inglés (mph, mpg) y español (km/h, km/L).</span></div>
+        <div class="stat"><b>$0</b><span class="en">Free, now and later. Support it on Ko-fi if you like it.</span><span class="es">Gratis, hoy y siempre. Apóyala en Ko-fi si te gusta.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="install" id="install">
+    <div class="wrap">
+      <h2><span class="en">Install in a few minutes</span><span class="es">Instálala en unos minutos</span></h2>
+      <p class="sub"><span class="en">No root, no flashing. Your factory apps keep working.</span><span class="es">Sin root ni flasheo. Tus apps de fábrica siguen funcionando.</span></p>
+      <ol class="steps">
+        <li><b><span class="en">Download the APK</span><span class="es">Descarga el APK</span></b><span class="en">On the car screen, or on a phone and copy it over with a USB drive.</span><span class="es">En la pantalla del auto, o en el celular y pásalo con una memoria USB.</span></li>
+        <li><b><span class="en">Allow the install</span><span class="es">Permite la instalación</span></b><span class="en">Android asks once to allow installs from your browser or file manager.</span><span class="es">Android pide una vez permitir instalar desde tu navegador o explorador de archivos.</span></li>
+        <li><b><span class="en">Make it your Home app</span><span class="es">Hazla tu inicio</span></b><span class="en">Press Home and pick MPH OS → Always.</span><span class="es">Presiona Inicio y elige MPH OS → Siempre.</span></li>
+        <li><b><span class="en">Add your car (optional)</span><span class="es">Conecta tu auto (opcional)</span></b><span class="en">Pair an ELM327 OBD-II adapter in Settings for live engine data.</span><span class="es">Empareja un adaptador OBD-II ELM327 en Ajustes para ver el motor en vivo.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="download" id="download">
+    <div class="wrap">
+      <div class="inapp" id="inapp" role="note">
+        <b><span class="en">You're in the <span class="appname">Facebook</span> browser, which blocks app downloads.</span><span class="es">Estás en el navegador de <span class="appname">Facebook</span>, que bloquea la descarga de apps.</span></b>
+        <ol>
+          <li><span class="en">Tap ⋯ or ⋮ at the top right.</span><span class="es">Toca ⋯ o ⋮ arriba a la derecha.</span></li>
+          <li><span class="en">Choose "Open in browser" or "Open in Chrome".</span><span class="es">Elige «Abrir en navegador» o «Abrir en Chrome».</span></li>
+          <li><span class="en">Tap Download again.</span><span class="es">Toca Descargar otra vez.</span></li>
+        </ol>
+        <p style="margin:10px 0 0"><a href="#" id="copylink"><span class="en">Copy this page's link</span><span class="es">Copiar el enlace de esta página</span></a></p>
+      </div>
+      <h2><span class="en">Give your car screen a second life</span><span class="es">Dale una segunda vida a tu pantalla</span></h2>
+      <p class="sub" style="margin-left:auto;margin-right:auto"><span class="en">Free on GitHub today, Google Play soon.</span><span class="es">Gratis en GitHub hoy, pronto en Google Play.</span></p>
+      <div class="cta">
+        <a class="btn primary js-download" href="https://github.com/alexgalicea/mph-os/releases/latest"><span class="en">Download MPH OS</span><span class="es">Descargar MPH OS</span></a>
+        <a class="btn ghost" href="https://ko-fi.com/alexgalicea">☕ <span class="en">Support on Ko-fi</span><span class="es">Apoyar en Ko-fi</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><span class="en">MPH OS is an independent project, not affiliated with Honda, Apple or Google. Set things up while parked and keep your eyes on the road.</span><span class="es">MPH OS es un proyecto independiente, sin relación con Honda, Apple ni Google. Configúrala estacionado y mantén la vista en el camino.</span></div>
+    <nav>
+      <a href="https://github.com/alexgalicea/mph-os">GitHub</a>
+      <a href="https://github.com/alexgalicea/mph-os/releases"><span class="en">Releases</span><span class="es">Versiones</span></a>
+      <a href="https://github.com/alexgalicea/mph-os/issues"><span class="en">Report a problem</span><span class="es">Reportar un problema</span></a>
+      <a href="https://github.com/alexgalicea/mph-os/blob/main/PRIVACY.md"><span class="en">Privacy</span><span class="es">Privacidad</span></a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var body = document.body, screen = document.getElementById('screen'), frame = null;
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  var lang = new URLSearchParams(location.search).get('lang') || store('mphsite.lang') ||
+    ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+  function appUrl() { return 'app/?kiosk&lang=' + lang; }
+  function setLang(l) {
+    lang = l === 'es' ? 'es' : 'en';
+    body.dataset.lang = lang; document.documentElement.lang = lang; store('mphsite.lang', lang);
+    document.querySelectorAll('[data-set-lang]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.setLang === lang)); });
+    if (frame) frame.src = appUrl();
+  }
+  document.querySelectorAll('[data-set-lang]').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.setLang); }); });
+  setLang(lang);
+
+  // Scale the 1024×600 app to the frame.
+  function fit() { if (frame) frame.style.transform = 'scale(' + screen.clientWidth / 1024 + ')'; }
+  window.addEventListener('resize', fit);
+  function start() {
+    if (frame) return;
+    frame = document.createElement('iframe');
+    frame.title = 'MPH OS live demo'; frame.src = appUrl(); frame.setAttribute('allow', 'fullscreen');
+    screen.innerHTML = ''; screen.appendChild(frame); fit();
+  }
+  document.getElementById('start').addEventListener('click', start);
+  // Start on its own when the demo scrolls into view on a desktop-sized screen.
+  if ('IntersectionObserver' in window && window.matchMedia('(min-width: 900px)').matches) {
+    var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { start(); io.disconnect(); } }, { threshold: 0.4 });
+    io.observe(screen);
+  }
+  document.getElementById('fullscreen').addEventListener('click', function (e) { e.preventDefault(); location.href = appUrl(); });
+  document.getElementById('reset').addEventListener('click', function (e) {
+    e.preventDefault();
+    try { ['civicos.settings', 'civicos.trips', 'civicos.energy', 'mphdemo.v'].forEach(function (k) { localStorage.removeItem(k); }); } catch (x) {}
+    if (frame) frame.src = appUrl(); else start();
+  });
+
+  // In-app browsers (Facebook, Instagram, Messenger, TikTok) block APK downloads.
+  var ua = navigator.userAgent || '', m = ua.match(/FBAN|FBAV|FB_IAB|Instagram|Messenger|musical_ly|TikTok|Line\//);
+  if (m) {
+    var name = /Instagram/.test(m[0]) ? 'Instagram' : /musical_ly|TikTok/.test(m[0]) ? 'TikTok' : /Line/.test(m[0]) ? 'LINE' : 'Facebook';
+    document.querySelectorAll('.appname').forEach(function (s) { s.textContent = name; });
+    var box = document.getElementById('inapp');
+    box.classList.add('show');
+    document.querySelectorAll('.js-download').forEach(function (a) {
+      a.addEventListener('click', function (e) { e.preventDefault(); location.hash = 'download'; box.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+    });
+    document.getElementById('copylink').addEventListener('click', function (e) {
+      e.preventDefault();
+      var url = location.origin + location.pathname;
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { e.target.textContent = '✓'; });
+      if (/Android/.test(ua)) location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+    });
+  }
+})();
+</script>
+</body>
+</html>
